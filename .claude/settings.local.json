@@ -2,7 +2,19 @@
   "permissions": {
     "allow": [
       "Bash(cat)",
-      "Bash(gh issue *)"
+      "Bash(gh issue *)",
+      "Bash(pnpm add *)",
+      "Bash(mkdir -p /Users/aboric/Documents/GitHub/aboric/public/fonts)",
+      "Bash(curl -sSL -o JetBrainsMono-Regular.woff2 https://github.com/JetBrains/JetBrainsMono/raw/v2.304/fonts/webfonts/JetBrainsMono-Regular.woff2)",
+      "Bash(curl -sSL -o JetBrainsMono-Medium.woff2 https://github.com/JetBrains/JetBrainsMono/raw/v2.304/fonts/webfonts/JetBrainsMono-Medium.woff2)",
+      "Bash(curl -sSL -o JetBrainsMono-SemiBold.woff2 https://github.com/JetBrains/JetBrainsMono/raw/v2.304/fonts/webfonts/JetBrainsMono-SemiBold.woff2)",
+      "Bash(file *)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm build *)",
+      "Bash(pnpm dev *)",
+      "Bash(git commit *)",
+      "Bash(gh pr *)",
+      "Bash(gh api *)"
     ]
   }
 }
