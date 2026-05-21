@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getTheme, setTheme, toggleTheme } from './theme';
 
 function stubPrefersDark(prefersDark: boolean): void {
@@ -66,5 +66,40 @@ describe('theme controller', () => {
     toggleTheme();
     expect(document.documentElement.dataset.theme).toBe('dark');
     expect(localStorage.getItem('theme')).toBe('dark');
+  });
+
+  describe('when storage access is blocked', () => {
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    it('getTheme falls back to the system preference when getItem throws', () => {
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new Error('storage blocked');
+      });
+      stubPrefersDark(false);
+      expect(getTheme()).toBe('light');
+    });
+
+    it('setTheme still updates the dataset attribute when setItem throws', () => {
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new Error('storage blocked');
+      });
+      setTheme('light');
+      expect(document.documentElement.dataset.theme).toBe('light');
+    });
+
+    it('toggleTheme still flips the dataset attribute when storage throws', () => {
+      document.documentElement.dataset.theme = 'dark';
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new Error('storage blocked');
+      });
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new Error('storage blocked');
+      });
+      stubPrefersDark(true);
+      toggleTheme();
+      expect(document.documentElement.dataset.theme).toBe('light');
+    });
   });
 });
