@@ -26,7 +26,7 @@ export function setTheme(theme: Theme): void {
 export function getTheme(): Theme {
   const stored = readStored();
   if (stored) return stored;
-  const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? true;
+  const prefersDark = globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches ?? true;
   return prefersDark ? 'dark' : 'light';
 }
 
