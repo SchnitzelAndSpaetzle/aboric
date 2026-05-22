@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import HelpOverlay from '../components/HelpOverlay.astro';
 import { loadProfile } from '../content/profile';
 import '../styles/site.css';
 
@@ -38,8 +39,11 @@ const { title, description } = profile;
       </main>
       <Footer />
     </div>
+    <HelpOverlay />
     <script>
       import '../scripts/theme-toggle';
+      import '../scripts/keyboard';
+      import '../scripts/section-observer';
     </script>
   </body>
 </html>

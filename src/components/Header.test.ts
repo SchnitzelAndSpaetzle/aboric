@@ -50,4 +50,11 @@ describe("Header", () => {
 		expect(toggle).not.toBeNull();
 		expect(toggle?.tagName).toBe("BUTTON");
 	});
+
+	it("exposes the current section id via [data-current-section]", async () => {
+		const doc = await renderHeader();
+		const el = doc.querySelector<HTMLElement>("[data-current-section]");
+		expect(el).not.toBeNull();
+		expect(el?.textContent?.trim()).toBe("about");
+	});
 });

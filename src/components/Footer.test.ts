@@ -26,4 +26,14 @@ describe("Footer", () => {
 		const text = doc.body.textContent?.replace(/\s+/g, " ").trim() ?? "";
 		expect(text).toContain("press ? for shortcuts");
 	});
+
+	it("renders the shortcut hint as a [data-help-open] button", async () => {
+		const doc = await renderFooter();
+		const btn = doc.querySelector<HTMLButtonElement>("[data-help-open]");
+		expect(btn).not.toBeNull();
+		expect(btn?.tagName).toBe("BUTTON");
+		expect(btn?.textContent?.replace(/\s+/g, " ").trim()).toContain(
+			"press ? for shortcuts",
+		);
+	});
 });

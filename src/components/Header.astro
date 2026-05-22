@@ -11,7 +11,7 @@ const profile = loadProfile();
 ---
 <header class="header">
   <div class="header__row">
-    <span class="header__path"><span class="dim">~/</span>{profile.handle}<span class="dim"> · </span>{currentSectionId}</span>
+    <span class="header__path"><span class="dim">~/</span>{profile.handle}<span class="dim"> · </span><span data-current-section>{currentSectionId}</span></span>
     <nav class="header__nav" aria-label="sections">
       {SECTIONS.map((s) => (
         <a class="navlink" href={`#${s.id}`}><span class="dim">[{s.key}]</span> {s.label}</a>
