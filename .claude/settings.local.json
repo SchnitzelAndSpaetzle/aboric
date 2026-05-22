@@ -17,7 +17,14 @@
       "Bash(gh api *)",
       "Bash(pnpm exec *)",
       "Bash(pnpm run *)",
-      "Bash(pnpm lint *)"
+      "Bash(pnpm lint *)",
+      "Bash(git worktree *)",
+      "Bash(git push *)",
+      "Bash(git add *)",
+      "Bash(git status*)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git checkout *)"
     ]
   }
 }
