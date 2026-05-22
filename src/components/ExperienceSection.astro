@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import { loadProfile } from '../content/profile';
+import { sortExperience } from '../content/experience-sort';
+
+const profile = loadProfile();
+const entries = await getCollection('experience');
+const jobs = sortExperience(entries.map((e) => e.data));
+
+function padRight(s: string, n: number): string {
+  return s.length >= n ? s : s + ' '.repeat(n - s.length);
+}
+---
+<section id="experience" class="sec">
+  <div class="sec__head">
+    <div class="sec__num">§ 02</div>
+    <h2 class="sec__title">experience</h2>
+    <div class="sec__hint dim">13+ years, three companies</div>
+  </div>
+
+  <ol class="exp">
+    {jobs.map((job, i) => (
+      <li class="exp__row">
+        <div class="exp__rail" aria-hidden="true">
+          <span class="exp__dot">{i === 0 ? '●' : '○'}</span>
+          {i < jobs.length - 1 && <span class="exp__line">│</span>}
+        </div>
+        <div class="exp__body">
+          <div class="exp__head">
+            <span class="exp__company">
+              <a class="link" href={job.url} target="_blank" rel="noreferrer">{job.company}</a>
+            </span>
+            <span class="dim exp__dates">
+              {job.start} → {job.end}
+            </span>
+          </div>
+          <div class="exp__sub dim">
+            {job.role} · {job.location}
+          </div>
+          <div class="exp__note">{job.note}</div>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <div class="edu">
+    <div class="edu__head dim">— education —</div>
+    <div class="edu__row">
+      <span>{profile.education.school}</span>
+      <span class="dim"> · </span>
+      <span>{profile.education.degree}</span>
+      <span class="dim"> · </span>
+      <span class="dim">{profile.education.years}</span>
+    </div>
+  </div>
+
+  <div class="skills">
+    <div class="skills__head dim">— skills —</div>
+    <dl class="skills__list">
+      {profile.skills.map((s) => (
+        <div class="skills__row">
+          <dt class="dim">{padRight(s.group, 12)}</dt>
+          <dd>{s.items}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
