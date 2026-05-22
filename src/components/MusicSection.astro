@@ -1,0 +1,79 @@
+---
+import { loadMusic } from '../content/music';
+import { buildTrackUrl } from '../lib/track-url';
+
+const music = loadMusic();
+
+function padL(n: number, width: number, ch = '0'): string {
+  const s = String(n);
+  return s.length >= width ? s : ch.repeat(width - s.length) + s;
+}
+
+const bandcampHost = 'streetofcrocodiles.bandcamp.com';
+const spotifyLabel = 'Street of Crocodiles';
+const youtubeHandle = '@street_of_crocodiles';
+---
+<section id="music" class="sec">
+  <div class="sec__head">
+    <div class="sec__num">§ 04</div>
+    <h2 class="sec__title">music</h2>
+    <div class="sec__hint dim">aka Street of Crocodiles · est. 2010</div>
+  </div>
+
+  <div class="music__intro prose">
+    <p>
+      i record electronic music as <strong>Street of Crocodiles</strong>
+      <span class="dim">(SOC)</span>. mostly instrumental — ambient,
+      downtempo, techno, synthwave. came at it from years of playing guitar
+      and bass; started producing in 2010.
+    </p>
+  </div>
+
+  <div class="links-block">
+    <a class="links-block__row" href={music.bandcamp} target="_blank" rel="noreferrer">
+      <span class="dim links-block__label">bandcamp</span>
+      <span class="links-block__val">{bandcampHost}</span>
+      <span class="dim links-block__arrow">↗</span>
+    </a>
+    <a class="links-block__row" href={music.spotify} target="_blank" rel="noreferrer">
+      <span class="dim links-block__label">spotify</span>
+      <span class="links-block__val">{spotifyLabel}</span>
+      <span class="dim links-block__arrow">↗</span>
+    </a>
+    <a class="links-block__row" href={music.youtube} target="_blank" rel="noreferrer">
+      <span class="dim links-block__label">youtube</span>
+      <span class="links-block__val">{youtubeHandle}</span>
+      <span class="dim links-block__arrow">↗</span>
+    </a>
+  </div>
+
+  <div class="tracks">
+    <div class="tracks__head dim">
+      <span>#</span>
+      <span>title</span>
+      <span>open in</span>
+    </div>
+    {music.tracks.map((track, i) => {
+      const index = i + 1;
+      const watchUrl = buildTrackUrl({
+        videoId: track.videoId,
+        playlistId: music.playlistId,
+        index,
+      });
+      return (
+        <a class="tracks__row" href={watchUrl} target="_blank" rel="noreferrer">
+          <span class="dim tracks__num">{padL(index, 2)}</span>
+          <span class="tracks__title">
+            <span class="dim">▸ </span>{track.title}
+          </span>
+          <span class="dim tracks__where">youtube ↗</span>
+        </a>
+      );
+    })}
+  </div>
+
+  <p class="dim small music__foot">
+    full catalog + lossless downloads on{' '}
+    <a class="link" href={music.bandcamp} target="_blank" rel="noreferrer">bandcamp ↗</a>.
+  </p>
+</section>

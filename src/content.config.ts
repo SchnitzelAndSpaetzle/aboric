@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { experienceSchema } from "./content/experience-schema";
+import { musicSchema } from "./content/music-schema";
 import { profileSchema } from "./content/profile-schema";
 import { projectSchema } from "./content/project-schema";
 
@@ -23,4 +24,9 @@ const projects = defineCollection({
 	schema: projectSchema,
 });
 
-export const collections = { profile, about, experience, projects };
+const music = defineCollection({
+	loader: glob({ pattern: "music.yaml", base: "./src/content" }),
+	schema: musicSchema,
+});
+
+export const collections = { profile, about, experience, projects, music };

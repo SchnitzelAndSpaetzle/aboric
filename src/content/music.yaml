@@ -1,0 +1,10 @@
+bandcamp: "https://streetofcrocodiles.bandcamp.com"
+spotify: "https://open.spotify.com/artist/2D1U7DMfjy9DddHPM25jOl"
+youtube: "https://www.youtube.com/@street_of_crocodiles"
+playlistId: "OLAK5uy_mG_3VGLrAKtzGS0a8huv4saw2OdDi9H3Q"
+tracks:
+  - { title: "track 02", videoId: "E3-uug-inkM" }
+  - { title: "track 05", videoId: "B0e3iv-fqGg" }
+  - { title: "track 10", videoId: "Q7UPyPIO7gY" }
+  - { title: "track 12", videoId: "8wLWUof6Ofk" }
+  - { title: "track 15", videoId: "IW3lAHslqgQ" }
