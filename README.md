@@ -44,3 +44,14 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## 🛡️ Branch protection ruleset
+
+The protection rules for `main` are stored as JSON at `.github/rulesets/main.json` so they can be reapplied if config drifts or the repo is recreated. Applying or updating the ruleset requires repo admin access.
+
+```sh
+./scripts/apply-ruleset.sh                # current repo
+./scripts/apply-ruleset.sh owner/repo     # specific repo
+```
+
+The script is idempotent — it updates the existing ruleset by name if present, otherwise creates a new one. Requires `gh` (authenticated as admin) and `jq`.
