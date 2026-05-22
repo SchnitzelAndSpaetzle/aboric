@@ -32,7 +32,8 @@
       "Bash(pnpm biome *)",
       "Bash(echo \"exit:$?\")",
       "Bash(git -C /Users/aboric/Documents/GitHub/aboric branch -a)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(npx vitest *)"
     ]
   }
 }
