@@ -14,7 +14,9 @@
       "Bash(pnpm dev *)",
       "Bash(git commit *)",
       "Bash(gh pr *)",
-      "Bash(gh api *)"
+      "Bash(gh api *)",
+      "Bash(pnpm exec *)",
+      "Bash(pnpm run *)"
     ]
   }
 }

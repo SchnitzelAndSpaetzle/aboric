@@ -1,0 +1,27 @@
+handle: aboric
+name: aleksandar borić
+tagline: software developer · making music on the side
+location: belgrade, serbia · cet
+email: aboric@tuta.io
+title: ~/aboric · developer + music
+description: a. boric — software engineer and music maker. no tracking.
+links:
+  - { label: github,   url: "https://github.com/aboric" }
+  - { label: linkedin, url: "https://www.linkedin.com/in/aboric" }
+  - { label: 3ap,      url: "https://3ap.ch/" }
+  - { label: bandcamp, url: "https://streetofcrocodiles.bandcamp.com" }
+  - { label: spotify,  url: "https://open.spotify.com/artist/2D1U7DMfjy9DddHPM25jOl" }
+  - { label: youtube,  url: "https://www.youtube.com/@street_of_crocodiles" }
+education:
+  school: Singidunum University
+  degree: Master's in Informatics and Computing
+  years: 2008 – 2013
+skills:
+  - group: frontend
+    items: HTML5, JavaScript, TypeScript, CSS, React.js, Next.js, Vue.js, Nuxt.js, Figma
+  - group: backend
+    items: C#, .NET, Java, Spring Boot, SQL, WordPress
+  - group: devops
+    items: Git, Jenkins, GitHub Actions, OpenShift, Docker
+  - group: languages
+    items: Serbian (native), English

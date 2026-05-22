@@ -1,9 +1,22 @@
 ---
+import { loadProfile } from '../content/profile';
+import { SECTIONS } from '../content/sections';
+
+interface Props {
+  currentSectionId?: string;
+}
+
+const { currentSectionId = 'about' } = Astro.props;
+const profile = loadProfile();
 ---
 <header class="header">
   <div class="header__row">
-    <span class="header__path">~/aboric</span>
-    <nav class="header__nav" aria-label="sections"></nav>
+    <span class="header__path"><span class="dim">~/</span>{profile.handle}<span class="dim"> · </span>{currentSectionId}</span>
+    <nav class="header__nav" aria-label="sections">
+      {SECTIONS.map((s) => (
+        <a class="navlink" href={`#${s.id}`}><span class="dim">[{s.key}]</span> {s.label}</a>
+      ))}
+    </nav>
     <div class="header__meta">
       <button type="button" class="iconbtn" data-theme-toggle aria-label="toggle theme">[t]</button>
     </div>
