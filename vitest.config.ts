@@ -5,5 +5,6 @@ export default getViteConfig({
 	test: {
 		environment: "jsdom",
 		include: ["src/**/*.test.ts"],
+		globalSetup: ["./vitest.global-setup.ts"],
 	},
 });
