@@ -373,9 +373,25 @@ em {
 	text-align: left;
 	cursor: pointer;
 }
+.filetree__summary {
+	list-style: none;
+}
+.filetree__summary::-webkit-details-marker {
+	display: none;
+}
+.filetree__summary::marker {
+	content: "";
+}
 .filetree__row:hover,
-.filetree__row.is-open {
+.filetree__row.is-open,
+.filetree__details[open] > .filetree__summary {
 	background: var(--hover);
+}
+.filetree__details:not([open]) > .filetree__summary .filetree__marker::before {
+	content: "▶ ";
+}
+.filetree__details[open] > .filetree__summary .filetree__marker::before {
+	content: "▼ ";
 }
 .filetree__name {
 	font-weight: 500;
