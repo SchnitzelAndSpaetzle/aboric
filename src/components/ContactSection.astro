@@ -1,0 +1,46 @@
+---
+import { loadProfile } from '../content/profile';
+
+const profile = loadProfile();
+---
+<section id="contact" class="sec">
+  <div class="sec__head">
+    <div class="sec__num">§ 06</div>
+    <h2 class="sec__title">contact</h2>
+    <div class="sec__hint dim">say hello</div>
+  </div>
+  <div class="contact">
+    <div class="contact__row">
+      <span class="dim">email </span>
+      <button
+        type="button"
+        class="link"
+        data-copy-email
+        data-email={profile.email}
+      >{profile.email}</button>
+      <span class="dim small" data-copy-status> · click to copy</span>
+    </div>
+    <div class="contact__row">
+      <span class="dim">links </span>
+      <span class="contact__links">
+        {profile.links.map((l, i) => (
+          <>
+            <a class="link" href={l.url} target="_blank" rel="noreferrer">{l.label} ↗</a>
+            {i < profile.links.length - 1 ? <span class="dim"> · </span> : null}
+          </>
+        ))}
+      </span>
+    </div>
+    <div class="contact__row">
+      <span class="dim">cv    </span>
+      <a class="link" href="/aboric-cv.pdf" target="_blank" rel="noreferrer">aboric-cv.pdf ↗</a>
+    </div>
+    <div class="contact__row">
+      <span class="dim">based </span>
+      <span>{profile.location}</span>
+    </div>
+  </div>
+</section>
+<script>
+  import '../scripts/copy-email';
+</script>
