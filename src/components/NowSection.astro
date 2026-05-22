@@ -1,0 +1,33 @@
+---
+import { getEntry } from 'astro:content';
+
+const entry = await getEntry('now', 'now');
+if (!entry) {
+  throw new Error("now: src/content/now.md is missing");
+}
+
+const updated = entry.data.updated.toISOString().slice(0, 10);
+
+const bullets: string[] = (entry.body ?? "")
+  .split("\n")
+  .map((line) => line.trim())
+  .filter((line) => line.startsWith("- "))
+  .map((line) => line.slice(2).trim());
+---
+<section id="now" class="sec">
+  <div class="sec__head">
+    <div class="sec__num">§ 05</div>
+    <h2 class="sec__title">now</h2>
+    <div class="sec__hint dim">updated {updated}</div>
+  </div>
+  <ul class="now">
+    {bullets.map((line, i) => (
+      <li class="now__row">
+        <span class="dim">{String(i + 1).padStart(2, "0")}.</span> {line}
+      </li>
+    ))}
+  </ul>
+  <p class="dim small">
+    inspired by <a class="link" href="https://nownownow.com">nownownow.com</a>. updated every few weeks.
+  </p>
+</section>
