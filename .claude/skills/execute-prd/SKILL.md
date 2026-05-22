@@ -65,6 +65,7 @@ For each AFK issue in topo order, the **parent** does:
    - TDD flag — if yes, instruct it to follow `.claude/skills/tdd/SKILL.md`; if no, implement directly.
    - The Phase-2 architectural decisions (copy them verbatim from the PRD comment).
    - Pointers to `CONTEXT.md` and any relevant ADRs.
+   - **Validation gates** (repo-specific; `/tdd` doesn't cover these): run `pnpm test` in the TDD loop and after the last change; run `pnpm lint` before every commit. If either fails, fix and re-run — **do not commit, push, or open the PR while either is failing**.
    - Commit style (`feat:/fix:/test:`, end final commit with `Closes #<n>`).
    - PR conventions: `gh pr create --draft --base <base> --title "<type>: <issue title> (closes #<n>)" --body "<heredoc with ## Summary + ## Test plan>"`.
    - Hard rules (no merging, no `--no-verify`, no amending base-branch commits).
