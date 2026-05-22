@@ -1,0 +1,81 @@
+---
+import { getCollection, render } from 'astro:content';
+import { sortProjects } from '../lib/sort-projects';
+
+const allProjects = await getCollection('projects');
+// Adapt Astro's `id` to the `slug` field the pure sort module uses.
+const withSlug = allProjects.map((entry) => ({ ...entry, slug: entry.id }));
+const projects = sortProjects(withSlug);
+
+const rendered = await Promise.all(
+  projects.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { entry, Content };
+  }),
+);
+---
+<section id="projects" class="sec">
+  <div class="sec__head">
+    <div class="sec__num">§ 03</div>
+    <h2 class="sec__title">projects</h2>
+    <div class="sec__hint dim">click a row to read the readme · all closed source</div>
+  </div>
+  <div class="filetree">
+    <div class="filetree__head dim filetree__row--grid">
+      <span>status</span>
+      <span>type</span>
+      <span>year</span>
+      <span>client</span>
+      <span>project</span>
+    </div>
+    {rendered.map(({ entry, Content }) => {
+      const p = entry.data;
+      return (
+        <div class="filetree__group">
+          <details class="filetree__details">
+            <summary class={`filetree__row filetree__row--grid filetree__summary`}>
+              <span class={`badge badge--${p.status}`}>{p.status}</span>
+              <span class="dim">{p.type}</span>
+              <span class="dim">{p.year}</span>
+              <span>{p.client}</span>
+              <span class="filetree__name">
+                <span class="dim filetree__marker" aria-hidden="true"></span>
+                {p.title}
+              </span>
+            </summary>
+            <div class="filetree__body">
+              <div class="filetree__connector dim" aria-hidden="true">│</div>
+              <div class="filetree__content">
+                <div class="readme">
+                  <div class="readme__head">
+                    <span class="dim">$ cat </span>
+                    <span>{entry.id}/README.md</span>
+                  </div>
+                  <div class="prose">
+                    <Content />
+                  </div>
+                  <div class="readme__stack">
+                    {p.stack.map((s) => (
+                      <span class="chip">{s}</span>
+                    ))}
+                  </div>
+                  {p.url ? (
+                    <div class="readme__actions">
+                      <a class="link" href={p.url} target="_blank" rel="noreferrer">
+                        [ visit live site ↗ ]
+                      </a>
+                    </div>
+                  ) : (
+                    <div class="readme__actions dim">
+                      [ no public link — internal system ]
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      );
+    })}
+  </div>
+</section>
