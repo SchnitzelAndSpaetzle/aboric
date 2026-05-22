@@ -1,0 +1,50 @@
+---
+type Row = { keys: string; label: string };
+
+const rows: Row[] = [
+  { keys: 'j', label: 'next section' },
+  { keys: 'k', label: 'previous section' },
+  { keys: '↓', label: 'next section' },
+  { keys: '↑', label: 'previous section' },
+  { keys: '1', label: 'jump to about' },
+  { keys: '2', label: 'jump to experience' },
+  { keys: '3', label: 'jump to projects' },
+  { keys: '4', label: 'jump to music' },
+  { keys: '5', label: 'jump to now' },
+  { keys: '6', label: 'jump to contact' },
+  { keys: 'g g', label: 'scroll to top' },
+  { keys: 'G', label: 'scroll to bottom' },
+  { keys: 't', label: 'toggle theme' },
+  { keys: '?', label: 'show this help' },
+  { keys: 'Esc', label: 'close overlay' },
+];
+---
+<div
+  class="help"
+  data-help-overlay
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="help-title"
+  hidden
+>
+  <div class="help__backdrop" data-help-backdrop></div>
+  <div class="help__panel" tabindex="-1" data-help-panel>
+    <header class="help__head">
+      <h2 id="help-title" class="help__title">keyboard shortcuts</h2>
+      <button
+        type="button"
+        class="iconbtn"
+        data-help-close
+        aria-label="close help"
+      >[ esc ]</button>
+    </header>
+    <ul class="help__list">
+      {rows.map((row) => (
+        <li class="help__row">
+          <kbd class="help__keys">{row.keys}</kbd>
+          <span class="help__label">{row.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

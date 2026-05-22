@@ -962,22 +962,33 @@ em {
 .help {
 	position: fixed;
 	inset: 0;
-	background: rgba(0, 0, 0, 0.55);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	z-index: 21;
 }
-:root[data-theme="light"] .help {
+.help[hidden] {
+	display: none;
+}
+.help__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.55);
+}
+:root[data-theme="light"] .help__backdrop {
 	background: rgba(0, 0, 0, 0.22);
 }
 
 .help__panel {
+	position: relative;
 	background: var(--bg);
 	border: 1px solid var(--fg);
 	padding: 18px 24px;
 	min-width: 380px;
 	max-width: 90vw;
+}
+.help__panel:focus {
+	outline: none;
 }
 .help__head {
 	display: flex;
@@ -987,9 +998,43 @@ em {
 	border-bottom: 1px dotted var(--rule);
 	padding-bottom: 8px;
 }
-.help__table {
+.help__title {
 	margin: 0;
+	font-size: 14px;
+	font-weight: normal;
+}
+.help__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 	font-size: 13px;
-	line-height: 1.6;
-	white-space: pre;
+	line-height: 1.7;
+}
+.help__row {
+	display: flex;
+	gap: 16px;
+	align-items: baseline;
+}
+.help__keys {
+	display: inline-block;
+	min-width: 56px;
+	color: var(--fg);
+	font-family: inherit;
+}
+.help__label {
+	color: var(--dim);
+}
+
+/* ─── Footer help button ─── */
+
+.footer__help {
+	background: none;
+	border: 0;
+	padding: 0;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+.footer__help:hover {
+	color: var(--fg);
 }
