@@ -24,7 +24,15 @@
       "Bash(git status*)",
       "Bash(git log *)",
       "Bash(git diff *)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(git fetch *)",
+      "Bash(pnpm install *)",
+      "Bash(mkdir *)",
+      "Bash(pnpm check *)",
+      "Bash(pnpm biome *)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(git -C /Users/aboric/Documents/GitHub/aboric branch -a)",
+      "Bash(git *)"
     ]
   }
 }
