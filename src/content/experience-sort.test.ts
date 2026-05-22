@@ -62,6 +62,13 @@ describe("sortExperience", () => {
 		expect(sorted[0].company).toBe("current");
 	});
 
+	it("does not treat substrings like 'unknown' as the current job", () => {
+		const newer = job({ company: "newer", start: "Jan 2022", end: "Dec 2024" });
+		const odd = job({ company: "odd", start: "Jan 2010", end: "unknown" });
+		const sorted = sortExperience([odd, newer]);
+		expect(sorted[0].company).toBe("newer");
+	});
+
 	it("is stable when two entries have the same start", () => {
 		const a = job({ company: "a", start: "Jan 2018" });
 		const b = job({ company: "b", start: "Jan 2018" });

@@ -50,7 +50,7 @@ function parseMonthYear(input: string): number {
 }
 
 function isCurrent(end: string): boolean {
-	return /present|current|now/i.test(end);
+	return /\b(?:present|current|now)\b/i.test(end);
 }
 
 /**
