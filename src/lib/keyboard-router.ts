@@ -17,11 +17,15 @@ export type RouteInput = {
 	lastGAt: number | null;
 	now: number;
 	fromInput: boolean;
+	overlayOpen: boolean;
 };
 
 export function route(input: RouteInput): Action | null {
 	if (input.fromInput) {
 		return null;
+	}
+	if (input.overlayOpen) {
+		return input.key === "Escape" ? { type: "closeOverlay" } : null;
 	}
 	const byKey = SECTIONS.find((s) => s.key === input.key);
 	if (byKey) {
@@ -46,7 +50,7 @@ export function route(input: RouteInput): Action | null {
 		}
 		return null;
 	}
-	if (input.key === "G") {
+	if (input.key === "G" && input.shiftKey) {
 		return { type: "scrollBottom" };
 	}
 	if (input.key === "t" || input.key === "T") {

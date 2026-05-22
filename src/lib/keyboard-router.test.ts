@@ -10,6 +10,7 @@ function input(overrides: Partial<RouteInput> = {}): RouteInput {
 		lastGAt: null,
 		now: 0,
 		fromInput: false,
+		overlayOpen: false,
 		...overrides,
 	};
 }
@@ -86,6 +87,10 @@ describe("keyboard router", () => {
 		});
 	});
 
+	it("'G' without shiftKey (Caps Lock) returns null", () => {
+		expect(route(input({ key: "G", shiftKey: false }))).toBeNull();
+	});
+
 	it.each(["t", "T"])("'%s' returns toggleTheme", (key) => {
 		expect(route(input({ key }))).toEqual({ type: "toggleTheme" });
 	});
@@ -126,5 +131,25 @@ describe("keyboard router", () => {
 		"Escape",
 	])("returns null when the event came from an INPUT/TEXTAREA target ('%s')", (key) => {
 		expect(route(input({ key, fromInput: true }))).toBeNull();
+	});
+
+	it.each([
+		"1",
+		"j",
+		"k",
+		"ArrowDown",
+		"G",
+		"t",
+		"?",
+	])("returns null while the overlay is open for non-Escape key '%s'", (key) => {
+		expect(
+			route(input({ key, shiftKey: key === "G", overlayOpen: true })),
+		).toBeNull();
+	});
+
+	it("still returns closeOverlay for Escape while the overlay is open", () => {
+		expect(route(input({ key: "Escape", overlayOpen: true }))).toEqual({
+			type: "closeOverlay",
+		});
 	});
 });

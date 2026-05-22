@@ -71,7 +71,9 @@ function isInputTarget(target: EventTarget | null): boolean {
 window.addEventListener("keydown", (event) => {
 	if (event.metaKey || event.ctrlKey || event.altKey) return;
 
-	// Focus trap while the overlay is open.
+	// Focus trap while the overlay is open. The panel itself is focusable
+	// (tabindex=-1) but is not in `focusable`, so we treat "active is the
+	// panel" the same as "active is outside the focusable ring."
 	if (isOverlayOpen() && event.key === "Tab") {
 		const focusable = focusableInOverlay();
 		if (focusable.length === 0) {
@@ -81,34 +83,35 @@ window.addEventListener("keydown", (event) => {
 		const first = focusable[0];
 		const last = focusable[focusable.length - 1];
 		const active = document.activeElement as HTMLElement | null;
-		if (event.shiftKey && (active === first || !overlay?.contains(active))) {
+		const insideRing = active != null && focusable.includes(active);
+		if (event.shiftKey && (!insideRing || active === first)) {
 			event.preventDefault();
 			last.focus();
-		} else if (
-			!event.shiftKey &&
-			(active === last || !overlay?.contains(active))
-		) {
+		} else if (!event.shiftKey && (!insideRing || active === last)) {
 			event.preventDefault();
 			first.focus();
 		}
 		return;
 	}
 
+	const fromInput = isInputTarget(event.target);
 	const action = route({
 		key: event.key,
 		shiftKey: event.shiftKey,
 		currentSectionId: getCurrentSectionId(),
 		lastGAt,
 		now: event.timeStamp,
-		fromInput: isInputTarget(event.target),
+		fromInput,
+		overlayOpen: isOverlayOpen(),
 	});
 
 	// Track 'g' taps for the double-tap detection regardless of whether this
 	// tap produced an action (the first 'g' returns null, the second produces
-	// scrollTop). Reset on anything else.
-	if (event.key === "g" && !event.shiftKey) {
+	// scrollTop). Skip input-originated 'g' so typing in a field doesn't seed
+	// a stray scrollTop on the next page-level 'g'.
+	if (event.key === "g" && !event.shiftKey && !fromInput) {
 		lastGAt = action?.type === "scrollTop" ? null : event.timeStamp;
-	} else {
+	} else if (!fromInput) {
 		lastGAt = null;
 	}
 
