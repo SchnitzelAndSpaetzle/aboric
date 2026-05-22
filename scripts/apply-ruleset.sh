@@ -20,7 +20,7 @@ if [[ ! -f "$RULESET_FILE" ]]; then
 fi
 
 NAME=$(jq -r .name "$RULESET_FILE")
-EXISTING_ID=$(gh api "repos/$REPO/rulesets" | jq -r --arg n "$NAME" '.[] | select(.name == $n) | .id' | head -n1)
+EXISTING_ID=$(gh api --paginate "repos/$REPO/rulesets?includes_parents=false&targets=branch" | jq -r --arg n "$NAME" '.[] | select(.name == $n) | .id' | head -n1)
 
 if [[ -n "$EXISTING_ID" ]]; then
   echo "Updating ruleset '$NAME' (id=$EXISTING_ID) on $REPO"
