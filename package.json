@@ -22,9 +22,12 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.9",
 		"@biomejs/biome": "^2.4.15",
+		"@types/jsdom": "^28.0.3",
+		"@types/node": "^25.9.1",
 		"jsdom": "^29.1.1",
 		"lefthook": "^2.1.8",
 		"typescript": "^6.0.3",
-		"vitest": "^4.1.7"
+		"vitest": "^4.1.7",
+		"yaml": "^2.9.0"
 	}
 }
