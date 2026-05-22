@@ -7,4 +7,8 @@ const profile = defineCollection({
 	schema: profileSchema,
 });
 
-export const collections = { profile };
+const about = defineCollection({
+	loader: glob({ pattern: "about.md", base: "./src/content" }),
+});
+
+export const collections = { profile, about };

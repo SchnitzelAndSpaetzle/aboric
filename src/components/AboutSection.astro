@@ -1,0 +1,29 @@
+---
+import { getEntry, render } from 'astro:content';
+import { loadProfile } from '../content/profile';
+import { buildAsciiHero } from '../lib/ascii-hero';
+
+const profile = loadProfile();
+const hero = buildAsciiHero({
+  name: profile.name,
+  tagline: profile.tagline,
+  location: profile.location,
+});
+
+const entry = await getEntry('about', 'about');
+if (!entry) {
+  throw new Error("about: src/content/about.md is missing");
+}
+const { Content } = await render(entry);
+---
+<section id="about" class="sec">
+  <div class="sec__head">
+    <div class="sec__num">§ 01</div>
+    <h2 class="sec__title">about</h2>
+    <div class="sec__hint dim">↓ scroll or press 'j'</div>
+  </div>
+  <pre class="ascii ascii--hero">{hero}</pre>
+  <div class="prose">
+    <Content />
+  </div>
+</section>
