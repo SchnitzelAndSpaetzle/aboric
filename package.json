@@ -13,7 +13,8 @@
 		"check": "astro check",
 		"lint": "biome ci .",
 		"test": "vitest run",
-		"test:watch": "vitest"
+		"test:watch": "vitest",
+		"prepare": "lefthook install || true"
 	},
 	"dependencies": {
 		"astro": "^6.3.6"
@@ -22,6 +23,7 @@
 		"@astrojs/check": "^0.9.9",
 		"@biomejs/biome": "^2.4.15",
 		"jsdom": "^29.1.1",
+		"lefthook": "^2.1.8",
 		"typescript": "^6.0.3",
 		"vitest": "^4.1.7"
 	}
