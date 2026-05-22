@@ -51,9 +51,16 @@ function getHeaderOffset(): number {
 function scrollToSection(id: string): void {
 	const section = document.getElementById(id);
 	if (!section) return;
+	setCurrentSectionId(id);
 	const top =
 		section.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
 	window.scrollTo({ top, behavior: "smooth" });
+}
+
+function setCurrentSectionId(id: string): void {
+	if (!SECTIONS.some((s) => s.id === id)) return;
+	const el = document.querySelector<HTMLElement>("[data-current-section]");
+	if (el) el.textContent = id;
 }
 
 function getCurrentSectionId(): string {
@@ -66,6 +73,27 @@ function isInputTarget(target: EventTarget | null): boolean {
 	if (!(target instanceof HTMLElement)) return false;
 	if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return true;
 	return target.isContentEditable;
+}
+
+function shouldPreventOverlayKey(key: string): boolean {
+	return (
+		SECTIONS.some((s) => s.key === key) ||
+		[
+			"j",
+			"k",
+			"g",
+			"G",
+			"t",
+			"T",
+			"?",
+			"ArrowDown",
+			"ArrowUp",
+			"PageDown",
+			"PageUp",
+			"Home",
+			"End",
+		].includes(key)
+	);
 }
 
 window.addEventListener("keydown", (event) => {
@@ -95,6 +123,7 @@ window.addEventListener("keydown", (event) => {
 	}
 
 	const fromInput = isInputTarget(event.target);
+	const overlayOpen = isOverlayOpen();
 	const action = route({
 		key: event.key,
 		shiftKey: event.shiftKey,
@@ -102,8 +131,13 @@ window.addEventListener("keydown", (event) => {
 		lastGAt,
 		now: event.timeStamp,
 		fromInput,
-		overlayOpen: isOverlayOpen(),
+		overlayOpen,
 	});
+
+	if (overlayOpen && !action) {
+		if (shouldPreventOverlayKey(event.key)) event.preventDefault();
+		return;
+	}
 
 	// Track 'g' taps for the double-tap detection regardless of whether this
 	// tap produced an action (the first 'g' returns null, the second produces
@@ -132,9 +166,11 @@ window.addEventListener("keydown", (event) => {
 			closeOverlay();
 			break;
 		case "scrollTop":
+			setCurrentSectionId(SECTIONS[0].id);
 			window.scrollTo({ top: 0, behavior: "smooth" });
 			break;
 		case "scrollBottom":
+			setCurrentSectionId(SECTIONS[SECTIONS.length - 1].id);
 			window.scrollTo({
 				top: document.documentElement.scrollHeight,
 				behavior: "smooth",
