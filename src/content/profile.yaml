@@ -8,10 +8,6 @@ description: a. boric — software engineer and music maker. no tracking.
 links:
   - { label: github,   url: "https://github.com/aboric" }
   - { label: linkedin, url: "https://www.linkedin.com/in/aboric" }
-  - { label: 3ap,      url: "https://3ap.ch/" }
-  - { label: bandcamp, url: "https://streetofcrocodiles.bandcamp.com" }
-  - { label: spotify,  url: "https://open.spotify.com/artist/2D1U7DMfjy9DddHPM25jOl" }
-  - { label: youtube,  url: "https://www.youtube.com/@street_of_crocodiles" }
 education:
   school: Singidunum University
   degree: Master's in Informatics and Computing

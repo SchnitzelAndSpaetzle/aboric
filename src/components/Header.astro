@@ -18,7 +18,29 @@ const profile = loadProfile();
       ))}
     </nav>
     <div class="header__meta">
+      <button
+        type="button"
+        class="iconbtn header__navtoggle"
+        data-nav-toggle
+        aria-label="toggle navigation"
+        aria-expanded="false"
+        aria-controls="header-nav-panel"
+      >[nav]</button>
       <button type="button" class="iconbtn" data-theme-toggle aria-label="toggle theme">[t]</button>
     </div>
   </div>
+  <nav
+    id="header-nav-panel"
+    class="header__panel"
+    aria-label="sections"
+    data-nav-panel
+    hidden
+  >
+    {SECTIONS.map((s) => (
+      <a class="navlink" href={`#${s.id}`}><span class="dim">[{s.key}]</span> {s.label}</a>
+    ))}
+  </nav>
 </header>
+<script>
+  import '../scripts/nav-toggle';
+</script>
