@@ -1,0 +1,8 @@
+{
+	"name": "aboric-portfolio",
+	"compatibility_date": "2026-05-25",
+	"assets": {
+		"directory": "./dist",
+		"not_found_handling": "single-page-application"
+	}
+}

@@ -57,4 +57,19 @@ describe("Header", () => {
 		expect(el).not.toBeNull();
 		expect(el?.textContent?.trim()).toBe("about");
 	});
+
+	it("renders a [nav] toggle wired to a collapsible panel", async () => {
+		const doc = await renderHeader();
+		const toggle = doc.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+		expect(toggle).not.toBeNull();
+		expect(toggle?.textContent?.trim()).toBe("[nav]");
+		expect(toggle?.getAttribute("aria-expanded")).toBe("false");
+		expect(toggle?.getAttribute("aria-controls")).toBe("header-nav-panel");
+
+		const panel = doc.querySelector<HTMLElement>("[data-nav-panel]");
+		expect(panel).not.toBeNull();
+		expect(panel?.id).toBe("header-nav-panel");
+		expect(panel?.hasAttribute("hidden")).toBe(true);
+		expect(panel?.querySelectorAll("a")).toHaveLength(6);
+	});
 });

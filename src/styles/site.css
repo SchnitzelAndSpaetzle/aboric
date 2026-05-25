@@ -170,13 +170,19 @@ em {
 }
 .header__path {
 	white-space: nowrap;
+	margin-right: auto;
 }
 .header__nav {
 	display: flex;
 	gap: 4px;
-	flex: 1;
-	justify-content: center;
 	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+.header__panel {
+	display: none;
+}
+.header__navtoggle {
+	display: none;
 }
 .navlink {
 	font: inherit;
@@ -220,14 +226,27 @@ em {
 
 @media (max-width: 720px) {
 	.header__row {
-		flex-wrap: wrap;
-		gap: 8px 14px;
+		gap: 14px;
 		padding: 10px 16px;
 	}
 	.header__nav {
-		order: 3;
-		width: 100%;
-		justify-content: flex-start;
+		display: none;
+	}
+	.header__navtoggle {
+		display: inline;
+	}
+	.header__panel {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: 8px 16px 12px;
+		border-top: 1px solid var(--rule);
+	}
+	.header__panel[hidden] {
+		display: none;
+	}
+	.header__panel .navlink {
+		padding: 6px 8px;
 	}
 }
 
