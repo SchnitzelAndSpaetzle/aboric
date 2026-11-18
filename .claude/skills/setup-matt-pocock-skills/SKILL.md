@@ -1,6 +1,6 @@
 ---
 name: setup-matt-pocock-skills
-description: Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so the engineering skills know this repo's issue tracker (GitHub or local markdown), triage label vocabulary, and domain doc layout. Run before first use of `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out` — or if those skills appear to be missing context about the issue tracker, triage labels, or domain docs.
+description: Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so the engineering skills know this repo's issue tracker (GitHub or local markdown), triage label vocabulary, domain doc layout, and build/test stack. Run before first use of `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, `execute-prd`, or `zoom-out` — or if those skills appear to be missing context about the issue tracker, triage labels, domain docs, or build commands.
 disable-model-invocation: true
 ---
 
@@ -11,6 +11,7 @@ Scaffold the per-repo configuration that the engineering skills assume:
 - **Issue tracker** — where issues live (GitHub by default; local markdown is also supported out of the box)
 - **Triage labels** — the strings used for the five canonical triage roles
 - **Domain docs** — where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
+- **Stack** — language, build tool, test runner, lint/format gates, and validation commands
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
@@ -35,7 +36,7 @@ Assume the user does not know what these terms mean. Each section starts with a 
 
 **Section A — Issue tracker.**
 
-> Explainer: The "issue tracker" is where issues live for this repo. Skills like `to-issues`, `triage`, `to-prd`, and `qa` read from and write to it — they need to know whether to call `gh issue create`, write a markdown file under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
+> Explainer: The "issue tracker" is where issues live for this repo. Skills like `to-issues`, `triage`, `to-prd`, and `execute-prd` read from and write to it — they need to know whether to call `gh issue create`, write a markdown file under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
 
 Default posture: these skills were designed for GitHub. If a `git remote` points at GitHub, propose that. If a `git remote` points at GitLab (`gitlab.com` or a self-hosted host), propose GitLab. Otherwise (or if the user prefers), offer:
 
@@ -66,6 +67,22 @@ Confirm the layout:
 
 - **Single-context** — one `CONTEXT.md` + `docs/adr/` at the repo root. Most repos are this.
 - **Multi-context** — `CONTEXT-MAP.md` at the root pointing to per-context `CONTEXT.md` files (typically a monorepo).
+
+**Section D — Stack and build.**
+
+> Explainer: Skills like `tdd`, `diagnose`, and `execute-prd` need to know how to run tests and lint in this repo so they don't hard-code a stack. `docs/agents/stack.md` declares the build tool, test runner, mock library, lint/format gates, and the validation commands every skill must run before declaring work done. Without it, skills fall back to guessing (`npm test`? `pnpm test`? `mvn verify`?) — which is exactly the kind of leak we're trying to fix.
+
+Detect the stack from repo signals and propose values:
+
+- `package.json` + `pnpm-lock.yaml` → pnpm / Node / (Vitest or Jest from `devDependencies`)
+- `package.json` + `package-lock.json` → npm / Node
+- `pom.xml` → Maven / Java / JUnit + Mockito; look for Spotless and Checkstyle plugins
+- `build.gradle` / `build.gradle.kts` → Gradle / Java or Kotlin
+- `pyproject.toml` → Poetry or uv / Python / pytest
+- `go.mod` → Go / `go test`
+- `Cargo.toml` → Cargo / Rust
+
+Show the user the detected values and let them correct anything before writing.
 
 ### 3. Confirm and edit
 
@@ -104,15 +121,20 @@ The block:
 ### Domain docs
 
 [one-line summary of layout — "single-context" or "multi-context"]. See `docs/agents/domain.md`.
+
+### Stack
+
+[one-line summary — e.g. "TypeScript + Astro + Vitest + Biome + pnpm" or "Java 21 + Spring Boot + Maven + JUnit 5 + Mockito + Spotless"]. See `docs/agents/stack.md`.
 ```
 
-Then write the three docs files using the seed templates in this skill folder as a starting point:
+Then write the docs files using the seed templates in this skill folder as a starting point:
 
 - [issue-tracker-github.md](./issue-tracker-github.md) — GitHub issue tracker
 - [issue-tracker-gitlab.md](./issue-tracker-gitlab.md) — GitLab issue tracker
 - [issue-tracker-local.md](./issue-tracker-local.md) — local-markdown issue tracker
 - [triage-labels.md](./triage-labels.md) — label mapping
 - [domain.md](./domain.md) — domain doc consumer rules + layout
+- `docs/agents/stack.md` — language, build, test, lint, validation gates (write from the user's Section D answers; see the example in the repo's existing `docs/agents/stack.md` for the required headings)
 
 For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
 

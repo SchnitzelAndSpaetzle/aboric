@@ -3,7 +3,7 @@ name: to-prd
 description: Turn the current conversation context into a PRD and publish it to the project issue tracker. Use when user wants to create a PRD from the current context.
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
+This skill synthesises a PRD from the current conversation context and codebase understanding. Do NOT run a fresh requirements interview — assume the discovery already happened upstream (typically in `/grill-me` or `/grill-with-docs`). You may still ask the user **targeted confirmation questions** at the specific checkpoints below (module sketch, which modules to test); those are not an interview.
 
 The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
 
