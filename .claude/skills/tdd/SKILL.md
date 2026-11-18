@@ -5,6 +5,12 @@ description: Test-driven development with red-green-refactor loop. Use when user
 
 # Test-Driven Development
 
+## Repo execution defaults
+
+Before writing or running tests, read `docs/agents/stack.md` for this repo's test runner, mock library, lint/format gates, and validation commands. The TDD loop below is language-agnostic; the commands you actually run come from that file.
+
+If `docs/agents/stack.md` does not exist, run `/setup-matt-pocock-skills` first — otherwise you'll guess at `npm test` vs `pnpm test` vs `mvn test` vs `go test`, and you'll guess wrong.
+
 ## Philosophy
 
 **Core principle**: Tests should verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't.
